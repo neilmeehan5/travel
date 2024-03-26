@@ -1,10 +1,19 @@
 from django.urls import path
 from .views import (
     PlaceListApiView,
-    ContinentList
+    CityList,
+    CountryList,
+    # InitContinents,
+    # InitCountries,
+    # InitCities,
+    # ContinentList
 )
 
 urlpatterns = [
     path('list', PlaceListApiView.as_view()),
-    path('<str:continent>', ContinentList.as_view())
+    # path('continents/init', InitContinents.as_view()),
+    # path('countries/init', InitCountries.as_view()),
+    # path('cities/init', InitCities.as_view()),
+    path('<str:continent>/<str:country>', CityList.as_view()),
+    path('<str:continent>', CountryList.as_view()),
 ]

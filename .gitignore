@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
+migrations/
 nm_secrets.py
 develop-eggs/
 dist/
