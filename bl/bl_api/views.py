@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
-from .models import Place, Continent, Country, City
-from .serializers import PlaceSerializer, CountrySerializer, CitySerializer 
+from .models import BucketList, Continent, Country, City
+from .serializers import BucketListSerializer, CountrySerializer, CitySerializer 
 import geonamescache
 
 # TODO: Probably should do this some other way...
@@ -57,11 +57,13 @@ class CountryList(APIView):
         serializer = CountrySerializer(countries, many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 class CityList(APIView):
     def get(self, request, country: str, continent: str):
         cities = City.objects.filter(country_code = country).order_by('-population')
         serializer = CitySerializer(cities, many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class PlaceListApiView(APIView):
     # add permission to check if user is authenticated
@@ -72,8 +74,8 @@ class PlaceListApiView(APIView):
         '''
         List all the todo items for given requested user
         '''
-        places = Place.objects.filter(user = request.user.id)
-        serializer = PlaceSerializer(places, many=True)
+        places = BucketList.objects.filter(user = request.user.id)
+        serializer = BucketListSerializer(places, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     # 2. Create
@@ -82,11 +84,16 @@ class PlaceListApiView(APIView):
         Create the Todo with given todo data
         '''
         data = {
-            'task': request.data.get('task'), 
+            'country': request.data.get('country'), 
+            'city': request.data.get('city'), 
+            'continent': request.data.get('continent'), 
+            'activity': request.data.get('activity'), 
+            'recommended': request.data.get('recommended'),
+            'rating': request.data.get('rating'),
             'completed': request.data.get('completed'), 
             'user': request.user.id
         }
-        serializer = PlaceSerializer(data=data)
+        serializer = BucketListSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

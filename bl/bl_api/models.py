@@ -10,16 +10,6 @@ from django.contrib.auth.models import User
 
 #     def __str__(self):
 #         return self.task
-    
-class Place(models.Model):
-    country = models.TextField()
-    city = models.TextField()
-    activity = models.TextField()
-    # when_visited = models.DateTimeField()
-    timestamp = models.DateTimeField(auto_now_add = True, auto_now = False, blank = True)
-    completed = models.BooleanField(default = False, blank = True)
-    recommended = models.BooleanField(default = False, blank = True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE, blank = True, null = True)
 
 class Continent(models.Model):
     continent_code = models.TextField(primary_key = True)
@@ -28,8 +18,7 @@ class Continent(models.Model):
 
 class Country(models.Model):
     country_code = models.TextField(primary_key = True)
-    continent_code = models.ForeignKey(Continent, 
-                                    on_delete = models.CASCADE)
+    continent_code = models.ForeignKey(Continent, on_delete = models.CASCADE)
     country_name = models.TextField(null = False)
     capital = models.TextField()
     population = models.IntegerField()
@@ -41,3 +30,15 @@ class City(models.Model):
     alternate_names = models.TextField()
     country_code = models.ForeignKey(Country, on_delete = models.CASCADE)
     population = models.IntegerField()
+
+class BucketList(models.Model):
+    country = models.ForeignKey(Country, on_delete = models.CASCADE)
+    city = models.ForeignKey(City, on_delete = models.CASCADE)
+    continent = models.ForeignKey(Continent, on_delete = models.CASCADE)
+    activity = models.TextField()
+    # when_visited = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add = True, auto_now = False, blank = True)
+    completed = models.BooleanField(default = False, blank = True)
+    recommended = models.BooleanField(default = False, blank = True)
+    rating = models.IntegerField(default = 0, blank = True)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, blank = True, null = True)

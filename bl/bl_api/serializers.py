@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import Place, Country, Continent, City
+from .models import BucketList, Country, Continent, City
 
-class PlaceSerializer(serializers.ModelSerializer):
+class BucketListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Place
+        model = BucketList
         fields = '__all__'
 
 class ContinentSerializer(serializers.ModelSerializer):
