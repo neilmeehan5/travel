@@ -33,12 +33,17 @@ class City(models.Model):
 
 class BucketList(models.Model):
     country = models.ForeignKey(Country, on_delete = models.CASCADE)
-    city = models.ForeignKey(City, on_delete = models.CASCADE)
+    city = models.ForeignKey(City, on_delete = models.CASCADE, blank = True)
     continent = models.ForeignKey(Continent, on_delete = models.CASCADE)
-    activity = models.TextField()
+    activity = models.TextField() # TODO: add choices
+    comment = models.TextField(null = True)
+    traveled_from_city = models.TextField(blank = True)
+    traveled_from_country = models.TextField(blank = True)
+    # traveled_from = models.ForeignKey(City, on_delete = models.CASCADE, related_name = 'city_name', blank = True)
+    traveled_via = models.TextField(blank = True) # TODO: add choices
     # when_visited = models.DateTimeField()
     timestamp = models.DateTimeField(auto_now_add = True, auto_now = False, blank = True)
     completed = models.BooleanField(default = False, blank = True)
     recommended = models.BooleanField(default = False, blank = True)
-    rating = models.IntegerField(default = 0, blank = True)
+    rating = models.FloatField(default = 0, blank = True)
     user = models.ForeignKey(User, on_delete = models.CASCADE, blank = True, null = True)

@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import permissions
 from .models import BucketList, Continent, Country, City
+from django.contrib.auth.models import User
 from .serializers import BucketListSerializer, CountrySerializer, CitySerializer 
 import geonamescache
 
@@ -63,6 +64,11 @@ class CityList(APIView):
         cities = City.objects.filter(country_code = country).order_by('-population')
         serializer = CitySerializer(cities, many = True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class Test(APIView):
+    def get(self, request):
+        return Response({'Superuser Email:': User.objects.filter(is_superuser = True).values_list('email')}, status=status.HTTP_200_OK)
 
 
 class PlaceListApiView(APIView):
@@ -88,6 +94,10 @@ class PlaceListApiView(APIView):
             'city': request.data.get('city'), 
             'continent': request.data.get('continent'), 
             'activity': request.data.get('activity'), 
+            'traveled_from_city': request.data.get('traveled_from_city'),
+            'traveled_from_country': request.data.get('traveled_from_country'),
+            'traveled_via': request.data.get('traveled_via'),
+            'travel_duration': request.data.get('travel_duration'),
             'recommended': request.data.get('recommended'),
             'rating': request.data.get('rating'),
             'completed': request.data.get('completed'), 
