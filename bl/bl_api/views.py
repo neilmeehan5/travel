@@ -90,18 +90,18 @@ class PlaceListApiView(APIView):
         Create the Todo with given todo data
         '''
         data = {
-            'country': request.data.get('country'), 
-            'city': request.data.get('city'), 
-            'continent': request.data.get('continent'), 
-            'activity': request.data.get('activity'), 
-            'traveled_from_city': request.data.get('traveled_from_city'),
-            'traveled_from_country': request.data.get('traveled_from_country'),
-            'traveled_via': request.data.get('traveled_via'),
-            'travel_duration': request.data.get('travel_duration'),
-            'recommended': request.data.get('recommended'),
-            'rating': request.data.get('rating'),
-            'completed': request.data.get('completed'), 
-            'user': request.user.id
+            "country": request.data.get("country"), 
+            "city": request.data.get("city"), 
+            "continent": request.data.get("continent"), 
+            "activity": request.data.get("activity"), 
+            "traveled_from_city": request.data.get("traveled_from_city"),
+            "traveled_from_country": request.data.get("traveled_from_country"),
+            "traveled_via": request.data.get("traveled_via"),
+            "travel_duration": request.data.get("travel_duration"),
+            "recommended": request.data.get("recommended"),
+            "rating": request.data.get("rating"),
+            "completed": request.data.get("completed"), 
+            "user": request.user.id
         }
         serializer = BucketListSerializer(data=data)
         if serializer.is_valid():
